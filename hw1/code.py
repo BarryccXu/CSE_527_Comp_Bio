@@ -64,29 +64,29 @@ table = PrettyTable(['','M2_theta_2'])
 table.add_row(['M2_80 = 0, M2_4 = 0', round(M2_theta_2[0], 3)])
 table.add_row(['M2_80 = 0, M2_4 = 1', round(M2_theta_2[1], 3)])
 table.add_row(['M2_80 = 1, M2_4 = 0', round(M2_theta_2[2], 3)])
-table.add_row(['M2_80 = 1, M2_4 = 1', round(M2_theta_2[0], 3)])
+table.add_row(['M2_80 = 1, M2_4 = 1', round(M2_theta_2[3], 3)])
 print(table)
 #%% evaluation
 # calculate lob based likehood
 def cal_likehood(ones, zeros, theta):
-    likehood = len(ones) * np.log(theta) + len(zeros) * np.log(1 - theta)
-    return likehood
+    return len(ones) * np.log(theta) + len(zeros) * np.log(1 - theta)
+    
 #model 1
-M1_likehood = cal_likehood(ones_theta_80, zeros_theta_80, M1_theta_80) \
+M1_likehood = cal_likehood(ones_theta_80[0], zeros_theta_80[0], M1_theta_80) \
             + cal_likehood(np.intersect1d(zeros_theta_80[0], ones_theta_4[0]), np.intersect1d(zeros_theta_80[0], zeros_theta_4[0]), M1_theta_4[0]) \
             + cal_likehood(np.intersect1d(ones_theta_80[0], ones_theta_4[0]), np.intersect1d(ones_theta_80[0], zeros_theta_4[0]), M1_theta_4[1]) \
             + cal_likehood(np.intersect1d(zeros_theta_4[0], ones_theta_2[0]), np.intersect1d(zeros_theta_4[0], zeros_theta_2[0]), M1_theta_2[0]) \
             + cal_likehood(np.intersect1d(ones_theta_4[0], ones_theta_2[0]), np.intersect1d(ones_theta_4[0], zeros_theta_2[0]), M1_theta_2[1]) 
 
 # model 2
-M2_likehood = cal_likehood(ones_theta_80, zeros_theta_80, M2_theta_80) \
-            + cal_likehood(ones_theta_4, zeros_theta_4, M2_theta_4) \
+M2_likehood = cal_likehood(ones_theta_80[0], zeros_theta_80[0], M2_theta_80) \
+            + cal_likehood(ones_theta_4[0], zeros_theta_4[0], M2_theta_4) \
             + cal_likehood(np.intersect1d(tmp[0], ones_theta_2[0]), np.intersect1d(tmp[0], zeros_theta_2[0]), M2_theta_2[0])\
             + cal_likehood(np.intersect1d(tmp[1], ones_theta_2[0]), np.intersect1d(tmp[1], zeros_theta_2[0]), M2_theta_2[1])\
             + cal_likehood(np.intersect1d(tmp[2], ones_theta_2[0]), np.intersect1d(tmp[2], zeros_theta_2[0]), M2_theta_2[2])\
             + cal_likehood(np.intersect1d(tmp[3], ones_theta_2[0]), np.intersect1d(tmp[3], zeros_theta_2[0]), M2_theta_2[3])
 
-table = PrettyTable(['','Likehood(Log)'])
+table = PrettyTable(['','Likelihood(Log)'])
 table.add_row(['Model 1', round(M1_likehood, 2)])
 table.add_row(['Model 2', round(M2_likehood, 2)])
 print(table)
