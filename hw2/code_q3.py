@@ -23,18 +23,27 @@ frequency_ii = np.zeros(9)
 epsilon = 1e-4
 error_list = []
 error = float("inf")
-while(error > epsilon):
+max_iter_time = 1e4
+while(error > epsilon and len(error_list) < max_iter_time):
     #E-step
+    print('\n')
+    print('iteration_time: ', len(error_list))
+    print("Probability Table:")
     for row in Z:
         tmp0 = frequency_i[row[0].x_idx] * frequency_i[row[0].y_idx]
         tmp1 = frequency_i[row[1].x_idx] * frequency_i[row[1].y_idx]
         row[0].p = tmp0 / (tmp0 + tmp1)
         row[1].p = tmp1 / (tmp0 + tmp1)
+        print(row[0].p, ',', row[1].p)
     #M-step
     for row in Z:
         for i in range(row.size):
             frequency_ii[row[i].x_idx] += row[i].p / Z.size
             frequency_ii[row[i].y_idx] += row[i].p / Z.size
+    print("Frequency Table:")
+    print(frequency_ii)
     error = np.sum(abs(frequency_i - frequency_ii))
     error_list.append(error)
     frequency_i = frequency_ii
+print("--------------------------------------------------------------")
+print("covergence!!!")
