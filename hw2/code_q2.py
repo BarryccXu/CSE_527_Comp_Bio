@@ -12,7 +12,7 @@ pheno_data = pd.read_table('phenotype.txt', header = None)
 geno_data = geno_data.as_matrix().T
 geno_data = geno_data.astype(float)
 pheno_data = pheno_data.as_matrix().T
-#split data and normalizaiton
+#split data and do normalizaiton
 from sklearn.preprocessing import scale
 geno_norm = scale(geno_data) 
 train_geno = geno_norm[0:250, :]
