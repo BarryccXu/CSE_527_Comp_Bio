@@ -20,10 +20,10 @@ Z = np.array([[Zij(0.5, 2, 6), Zij(0.5, 4, 5)],
 frequency_i = np.array([1/12, 1/12, 1/12, 1/12,
                       3/12, 1/12, 2/12, 1/12, 1/12])
 frequency_ii = np.zeros(9)
-epsilon = 1e-4
+epsilon = 1e-7
 error_list = []
 error = float("inf")
-max_iter_time = 1e4
+max_iter_time = 1e4 
 while(error > epsilon and len(error_list) < max_iter_time):
     #E-step
     print('\n')
@@ -36,6 +36,7 @@ while(error > epsilon and len(error_list) < max_iter_time):
         row[1].p = tmp1 / (tmp0 + tmp1)
         print(row[0].p, ',', row[1].p)
     #M-step
+    frequency_ii = np.zeros(9)
     for row in Z:
         for i in range(row.size):
             frequency_ii[row[i].x_idx] += row[i].p / Z.size
@@ -46,4 +47,4 @@ while(error > epsilon and len(error_list) < max_iter_time):
     error_list.append(error)
     frequency_i = frequency_ii
 print("--------------------------------------------------------------")
-print("covergence!!!")
+print("coverged!!!")

@@ -35,7 +35,7 @@ def pred_model(train_X, test_X, train_y, test_y, alpha_range, model = "lasso", p
         mse.append(mean_squared_error(pred, test_y))
     # plot
     if(plot):
-        plt.plot(alpha_range, mse)
+        plt.plot(alpha_range,  mse)
         if(model == "lasso"):
             plt.title("Lasso")
         elif(model == "ridge"):
@@ -52,7 +52,7 @@ min(lasso_mse)
 ridge_mse = pred_model(train_geno, test_geno, train_pheno, test_pheno, 
                        np.arange(1000, 2000, 50),model = "ridge")
 min(ridge_mse)
-#%% leave one out validation
+#%% leave one set out validation
 #trainset : valset = 2:1
 from sklearn.model_selection import train_test_split
 X_geno, V_geno, X_pheno, V_pheno = train_test_split(train_geno, train_pheno, 
@@ -72,6 +72,34 @@ ridge_mse_val = pred_model(X_geno, V_geno, X_pheno, V_pheno,
 ridge_mse_test = pred_model(train_geno, test_geno, train_pheno, test_pheno, 
                             [24200], model = "ridge", plot = False)
 
+#%% leave one out validation
+'''
+from sklearn.linear_model import LassoLarsCV
+model = LassoLarsCV(cv=250, n_jobs = 3).fit(train_geno, train_pheno)
+import matplotlib.pyplot as plt
+plt.figure()
+plt.plot(model.cv_alphas_, model.mse_path_, ':')
+plt.plot(model.cv_alphas_, model.mse_path_.mean(axis=-1), 'k',
+         label='Average across the folds', linewidth=2)
+plt.axvline(model.cv_alphas_, linestyle='--', color='k',
+            label='alpha CV')
+plt.legend()
+
+#trainset : valset = 2:1
+from sklearn.model_selection import LeaveOneOut
+loo = LeaveOneOut()
+lasso_range = np.arange(0.01, 0.3, 0.05)
+lasso_mse_val = np.zeros(lasso_range.size)
+for train_index, test_index in loo.split(train_geno):
+    #print("TRAIN:", train_index, "TEST:", test_index)
+    #lasso
+    lasso_mse_val += pred_model(train_geno[train_index], train_geno[test_index], 
+                               train_pheno[train_index], train_pheno[test_index],
+                               lasso_range, plot = False)
+    #ridge
+    ridge_mse_val = pred_model(X_geno, V_geno, X_pheno, V_pheno,
+                               np.arange(2e4, 3e4, 200), model = "ridge")
+'''
 
 
 
