@@ -12685,10 +12685,12 @@ EckiCn0RkSyi0BcRySIKfRGRLKLQFxHJIv8f6JgFlZof33YAAAAASUVORK5CYII=
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">The CNN(0.987) performs better than the MLP(0.963) does on the validation set.</span>
 <span class="sd">Two advantages:</span>
-<span class="sd">1. The convolutional layers in CNN take into consideration the relationship of neighbor pixels.</span>
-<span class="sd">    This is the key advantage from my point of view.</span>
-<span class="sd">2. The training history shows that the CNN model can get good prediction in small epoch(0.9637 in one epoch).</span>
-<span class="sd">3. Although it takes long time to train a CNN model, we can speed it up on a powerful GPU.</span>
+<span class="sd">1. The convolutional layers in CNN consider more the relationship of neighbor pixels.</span>
+<span class="sd">    Filters are used for CNN, which can help us decrease the number of parameters for training.</span>
+<span class="sd">2. The pooliing layer is another way to decrease the number of parameters and it also extracts invariant features.</span>
+<span class="sd">3. The training history shows that the CNN model can get good prediction in small epoch(0.9637 in one epoch).</span>
+<span class="sd">4. Although it takes long time to train a CNN model, we can speed it up on a powerful GPU.</span>
+<span class="sd">    I retrained this model on my laptop GPU GTX960M, it takes 10 seconds per epoch.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 </pre></div>
 
